@@ -19,7 +19,7 @@ def main():
     # iterate over folds and combine
     for fold in folds:
         ds = "Dataset{}00_Age{}".format(5 + fold, fold)
-        f = open(os.path.join(root_dir, "inference", ds, "cross", "results.pkl"), "rb")
+        f = open(os.path.join(root_dir, "inference", ds, "cross", "results_cross.pkl"), "rb")
         results = pkl.load(f)
         f.close()
 
@@ -35,7 +35,7 @@ def main():
 
     print(np.array(dice_all).shape)
 
-    f = open(os.path.join(root_dir, "inference", "results_cross.pkl"), 'wb')
+    f = open(os.path.join(root_dir, "inference", "results_combined_cross.pkl"), 'wb')
     pkl.dump({"case_id": np.array(case_id_all),
               "sex": np.array(sex_all),
               "age": np.array(age_all),
