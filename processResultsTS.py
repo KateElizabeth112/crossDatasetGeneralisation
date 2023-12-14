@@ -45,8 +45,8 @@ preds_labels = {"background": 0,
                   "duodenum": 13,
                   "bladder": 14,
                   "prostate/uterus": 15}
-
-pred_labels_needed = [2, 3, 6, 10]
+input_map = [2, 3, 6, 10]
+output_map = [1, 2, 3, 4]
 
 n_channels = int(len(labels))
 
@@ -143,7 +143,10 @@ def calculateMetrics():
             print(gt.shape)
 
             # Select only relevant channels from the prediction
-            pred = pred[[pred_labels_needed], :, :]
+            for j in range(len(input_map)):
+                pred[pred==input_map[j]] = output_map[j]
+
+            pred[pred > output_map[-1]] = 0
 
             if np.unique(gt).sum() == 0:
                 print("Only background")
