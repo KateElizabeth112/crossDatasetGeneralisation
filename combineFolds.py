@@ -3,7 +3,8 @@ import pickle as pkl
 import numpy as np
 import os
 
-root_dir = '/rds/general/user/kc2322/projects/cevora_phd/live/TotalSegmentator/'
+#root_dir = '/rds/general/user/kc2322/projects/cevora_phd/live/TotalSegmentator/'
+root_dir = '/rds/general/user/kc2322/home/data/AMOS_3D/'
 
 folds = [0, 1, 2, 3, 4]
 
