@@ -2,9 +2,14 @@
 import pickle as pkl
 import numpy as np
 import os
+import argparse
 
-#root_dir = '/rds/general/user/kc2322/projects/cevora_phd/live/TotalSegmentator/'
-root_dir = '/rds/general/user/kc2322/home/data/AMOS_3D/'
+# argparse
+parser = argparse.ArgumentParser(description="Just an example",  formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+parser.add_argument("-r", "--rootdir", default="/rds/general/user/kc2322/home/data/AMOS_3D", help="full path to root directory")
+args = vars(parser.parse_args())
+
+root_dir = args["rootdir"]
 
 folds = [0, 1, 2, 3, 4]
 
@@ -14,6 +19,7 @@ def main():
     age_all = []
     dice_all = []
     hd_all = []
+    hd95_all = []
     vol_pred_all = []
     vol_gt_all = []
 
@@ -31,6 +37,7 @@ def main():
         age_all.append(list(results["age"]))
         dice_all.append(list(results["dice"]))
         hd_all.append(results["hd"])
+        hd95_all.append(results["hd95"])
         vol_pred_all.append(list(results["vol_pred"]))
         vol_gt_all.append(list(results["vol_gt"]))
 
@@ -41,7 +48,8 @@ def main():
               "sex": np.array(sex_all),
               "age": np.array(age_all),
               "dice": np.array(dice_all),
-              "hd": hd_all,
+              "hd": np.array(hd_all),
+              "hd95": np.array(hd95_all),
               "vol_pred": np.array(vol_pred_all),
               "vol_gt": np.array(vol_gt_all),
               }, f)
