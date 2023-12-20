@@ -43,6 +43,7 @@ for number in {0..4}; do
 
     # Run python script to evaluate results
     python3 processResultsTS.py -d $DATASET
-
-    python3 combineFolds.py -r $TEST_DIR
 done
+
+
+python3 combineFolds.py -r $TEST_DIR

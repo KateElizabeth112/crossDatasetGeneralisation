@@ -9,4 +9,6 @@ cd ${PBS_O_WORKDIR}
 module load anaconda3/personal
 source activate nnUNetv2
 
-python3 combineFolds.py
+TEST_DIR='/rds/general/user/kc2322/projects/cevora_phd/live/TotalSegmentator/'
+
+python3 combineFolds.py -r $TEST_DIR
