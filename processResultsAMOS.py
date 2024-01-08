@@ -168,7 +168,7 @@ def calculateMetrics():
                 pred_k = np.zeros(pred.shape)
                 pred_k[pred == k] = 1
 
-                plot3Dmesh(gt_k, pred_k, dice[k], save_path=os.path.join(root_dir, "images", organ_name, id + '.png'))
+                plot3Dmesh(gt_k, pred_k, dice[k], save_path=os.path.join(root_dir, "images", id + '_' + organ_name + '.png'))
 
             # get the ground truth and predicted volumes
             vol_pred, vol_gt = getVolume(pred, gt, vox_vol)
