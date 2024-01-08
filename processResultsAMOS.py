@@ -5,6 +5,7 @@ import os
 import pickle as pkl
 import pandas as pd
 from monai.metrics import compute_hausdorff_distance
+from plotting import plot3Dmesh
 import argparse
 
 # argparse
@@ -156,6 +157,20 @@ def calculateMetrics():
             dice = multiChannelDice(pred, gt, n_channels)
             hd, hd95 = computeHDDIstance(pred, gt, vox_spacing)
 
+            # plot the prediction and ground truth for each organ, overlaid on top of eachother
+            for k in range(1, len(labels)):
+                # get the organ label
+                organ_name = list(labels.keys())[k]
+
+                gt_k = np.zeros(gt.shape)
+                gt_k[gt == k] = 1
+
+                pred_k = np.zeros(pred.shape)
+                pred_k[pred == k] = 1
+
+                plot3Dmesh(gt_k, pred_k, dice[k], save_path=os.path.join(root_dir, "images", organ_name, id + '.png'))
+
+            # get the ground truth and predicted volumes
             vol_pred, vol_gt = getVolume(pred, gt, vox_vol)
 
             if id in ids_all:
