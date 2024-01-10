@@ -5,6 +5,7 @@ from skimage import measure
 
 # Plot a 3D mesh from a binary  3D label alongside the ground truth
 def plot3Dmesh(gt, pred, dice, save_path=""):
+    print(save_path)
     gt_verts, gt_faces, gt_normals, gt_values = measure.marching_cubes(gt, 0)
     pred_verts, pred_faces, pred_normals, pred_values = measure.marching_cubes(pred, 0)
 

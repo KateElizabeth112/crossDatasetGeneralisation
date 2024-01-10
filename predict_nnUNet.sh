@@ -1,7 +1,7 @@
 #!/bin/bash
 #PBS -l walltime=2:00:00
 #PBS -l select=1:ncpus=15:mem=120gb:ngpus=1:gpu_type=RTX6000
-#PBS -N predict_TS_cross
+#PBS -N predict_AMOS_cross
 
 cd ${PBS_O_WORKDIR}
 
