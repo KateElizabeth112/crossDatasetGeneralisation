@@ -147,7 +147,9 @@ def calculateMetrics():
             vox_vol = sx * sy * sz
             vox_spacing = [sx.item(), sy.item(), sz.item()]
 
+            # get the prediction and reverse order along x axis
             pred = pred_nii.get_fdata()
+            pred = np.flip(pred, 0)
             gt = gt_nii.get_fdata()
 
             if np.unique(gt).sum() == 0:
