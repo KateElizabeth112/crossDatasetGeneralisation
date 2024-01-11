@@ -149,8 +149,12 @@ def calculateMetrics():
 
             # get the prediction and reverse order along x axis
             pred = pred_nii.get_fdata()
-            pred = np.flip(pred, 0)
+            #pred = np.flip(pred, 0)
             gt = gt_nii.get_fdata()
+
+            # DEBUG: print shape of gt and pred arrays
+            print("Shape of prediction: {}".format(pred.shape))
+            print("Shape of gt: {}".format(gt.shape))
 
             if np.unique(gt).sum() == 0:
                 print("Only background")
@@ -171,6 +175,13 @@ def calculateMetrics():
                 pred_k[pred == k] = 1
 
                 plot3Dmesh(gt_k, pred_k, dice[k], save_path=os.path.join(root_dir, "images", id + '_' + organ_name + '.png'))
+
+            # DEBUG: plot one mesh of everything
+            gt_plot = np.zeros(gt.shape)
+            gt_plot[gt > 0] = 1
+            pred_plot = np.zeros(pred.shape)
+            pred_plot[pred > 0] = 1
+            plot3Dmesh(gt, pred, np.mean(dice), save_path=os.path.join(root_dir, "images", id + '.png'))
 
             # get the ground truth and predicted volumes
             vol_pred, vol_gt = getVolume(pred, gt, vox_vol)
