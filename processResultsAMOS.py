@@ -1,4 +1,4 @@
-# Process predictions for TS made using AMOS model
+# Process predictions for AMOS made using TS model
 import numpy as np
 import nibabel as nib
 import os
@@ -20,36 +20,37 @@ root_dir = '/rds/general/user/kc2322/home/data/AMOS_3D/'
 
 fold = "cross"
 
+# the gt is from the AMOS dataset, with the predictions made using the TS model
 preds_dir = os.path.join(root_dir, "inference", task, fold)
 gt_dir = os.path.join(root_dir, "nnUNet_raw", task, "labelsTs")
 
-labels = {"background": 0,
-          "right kidney": 1,
-          "left kidney": 2,
-          "liver": 3,
-          "pancreas": 4}
-
 preds_labels = {"background": 0,
-                  "spleen": 1,
-                  "right kidney": 2,
-                  "left kidney": 3,
-                  "gallbladder": 4,
-                  "esophagus": 5,
-                  "liver": 6,
-                  "stomach": 7,
-                  "aorta": 8,
-                  "inferior vena cava": 9,
-                  "pancreas": 10,
-                  "right adrenal gland": 11,
-                  "left adrenal gland": 12,
-                  "duodenum": 13,
-                  "bladder": 14,
-                  "prostate/uterus": 15}
+                "right kidney": 1,
+                "left kidney": 2,
+                "liver": 3,
+                "pancreas": 4}
+
+gt_labels = {"background": 0,
+             "spleen": 1,
+             "right kidney": 2,
+             "left kidney": 3,
+             "gallbladder": 4,
+             "esophagus": 5,
+             "liver": 6,
+             "stomach": 7,
+             "aorta": 8,
+             "inferior vena cava": 9,
+             "pancreas": 10,
+             "right adrenal gland": 11,
+             "left adrenal gland": 12,
+             "duodenum": 13,
+             "bladder": 14,
+             "prostate/uterus": 15}
 
 input_map = [2, 3, 6, 10]
 output_map = [1, 2, 3, 4]
 
-n_channels = int(len(labels))
+n_channels = int(len(preds_labels))
 
 
 def getVolume(pred, gt, vox_vol):
@@ -147,10 +148,13 @@ def calculateMetrics():
             vox_vol = sx * sy * sz
             vox_spacing = [sx.item(), sy.item(), sz.item()]
 
-            # get the prediction and reverse order along x axis
             pred = pred_nii.get_fdata()
-            #pred = np.flip(pred, 0)
-            gt = gt_nii.get_fdata()
+
+            # ground truth needs to have number of channels reduced
+            gt_full = gt_nii.get_fdata()
+            gt = np.zeros(gt_full.shape())
+            for q in range(input_map.shape()):
+                gt[gt_full == input_map[q]] = output_map[q]
 
             # DEBUG: print shape of gt and pred arrays
             print("Shape of prediction: {}".format(pred.shape))
@@ -164,9 +168,9 @@ def calculateMetrics():
             hd, hd95 = computeHDDIstance(pred, gt, vox_spacing)
 
             # plot the prediction and ground truth for each organ, overlaid on top of eachother
-            for k in range(1, len(labels)):
+            for k in range(1, len(preds_labels)):
                 # get the organ label
-                organ_name = list(labels.keys())[k]
+                organ_name = list(preds_labels.keys())[k]
 
                 gt_k = np.zeros(gt.shape)
                 gt_k[gt == k] = 1
