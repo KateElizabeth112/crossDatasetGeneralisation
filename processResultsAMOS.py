@@ -152,8 +152,8 @@ def calculateMetrics():
 
             # ground truth needs to have number of channels reduced
             gt_full = gt_nii.get_fdata()
-            gt = np.zeros(gt_full.shape())
-            for q in range(input_map.shape()):
+            gt = np.zeros(gt_full.shape)
+            for q in range(len(input_map)):
                 gt[gt_full == input_map[q]] = output_map[q]
 
             # DEBUG: print shape of gt and pred arrays

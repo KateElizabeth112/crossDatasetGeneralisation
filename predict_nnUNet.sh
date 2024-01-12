@@ -46,4 +46,4 @@ for number in {0..1}; do
 done
 
 
-python3 combineFolds.py -r $TEST_DIR
+#python3 combineFolds.py -r $TEST_DIR
