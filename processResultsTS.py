@@ -29,23 +29,6 @@ labels = {"background": 0,
           "liver": 3,
           "pancreas": 4}
 
-preds_labels = {"background": 0,
-                  "spleen": 1,
-                  "right kidney": 2,
-                  "left kidney": 3,
-                  "gallbladder": 4,
-                  "esophagus": 5,
-                  "liver": 6,
-                  "stomach": 7,
-                  "aorta": 8,
-                  "inferior vena cava": 9,
-                  "pancreas": 10,
-                  "right adrenal gland": 11,
-                  "left adrenal gland": 12,
-                  "duodenum": 13,
-                  "bladder": 14,
-                  "prostate/uterus": 15}
-
 input_map = [2, 3, 6, 10]
 output_map = [1, 2, 3, 4]
 
@@ -164,9 +147,9 @@ def calculateMetrics():
             vol_pred, vol_gt = getVolume(pred, gt, vox_vol)
 
             # plot the prediction and ground truth for each organ, overlaid on top of eachother
-            for k in range(1, len(preds_labels)):
+            for k in range(1, len(labels)):
                 # get the organ label
-                organ_name = list(preds_labels.keys())[k]
+                organ_name = list(labels.keys())[k]
 
                 gt_k = np.zeros(gt.shape)
                 gt_k[gt == k] = 1
