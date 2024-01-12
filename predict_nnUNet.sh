@@ -20,13 +20,13 @@ ROOT_DIR='/rds/general/user/kc2322/home/data/AMOS_3D/'
 TEST_DIR='/rds/general/user/kc2322/projects/cevora_phd/live/TotalSegmentator/'
 #TEST_DIR='/rds/general/user/kc2322/home/data/AMOS_3D/'
 
-datasets=("Dataset500_Age0")
+datasets=("Dataset500_Age0" "Dataset600_Age1" "Dataset700_Age2" "Dataset800_Age3" "Dataset900_Age4")
 
 export nnUNet_raw=$ROOT_DIR"nnUNet_raw"
 export nnUNet_preprocessed=$ROOT_DIR"nnUNet_preprocessed"
 export nnUNet_results=$ROOT_DIR"nnUNet_results"
 
-for number in {0..1}; do
+for number in {0..4}; do
     DATASET=${datasets[number]}
     TASK=${DATASET:7:3}
 
@@ -46,4 +46,4 @@ for number in {0..1}; do
 done
 
 
-#python3 combineFolds.py -r $TEST_DIR
+python3 combineFolds.py -r $TEST_DIR

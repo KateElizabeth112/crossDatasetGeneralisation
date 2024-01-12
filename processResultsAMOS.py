@@ -167,6 +167,7 @@ def calculateMetrics():
             dice = multiChannelDice(pred, gt, n_channels)
             hd, hd95 = computeHDDIstance(pred, gt, vox_spacing)
 
+            """
             # plot the prediction and ground truth for each organ, overlaid on top of eachother
             for k in range(1, len(preds_labels)):
                 # get the organ label
@@ -179,6 +180,7 @@ def calculateMetrics():
                 pred_k[pred == k] = 1
 
                 plot3Dmesh(gt_k, pred_k, dice[k], save_path=os.path.join(root_dir, "images", id + '_' + organ_name + '.png'))
+                """
 
             # DEBUG: plot one mesh of everything
             gt_plot = np.zeros(gt.shape)
